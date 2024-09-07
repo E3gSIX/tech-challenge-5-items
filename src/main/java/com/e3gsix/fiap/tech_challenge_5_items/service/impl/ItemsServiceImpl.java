@@ -8,6 +8,9 @@ import com.e3gsix.fiap.tech_challenge_5_items.repository.ItemRepository;
 import com.e3gsix.fiap.tech_challenge_5_items.service.ItemsService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 @Service
 public class ItemsServiceImpl implements ItemsService {
 
@@ -38,10 +41,15 @@ public class ItemsServiceImpl implements ItemsService {
     }
 
     @Override
-    public ItemResponse updateQuantity(Long id, Integer quantity) {
+    public ItemResponse update(Long id, Integer quantity, BigDecimal price) {
+        if(Objects.isNull(quantity) && Objects.isNull(price)) {
+            throw new UnsupportedOperationException("Preço e/ou quantidade devem ser informados.");
+        }
+
         Item itemToUpdate = getItem(id);
 
-        itemToUpdate.setQuantity(quantity);
+        if (Objects.nonNull(quantity)) itemToUpdate.setQuantity(quantity);
+        if (Objects.nonNull(price)) itemToUpdate.setPrice(price);
 
         Item savedItem = this.itemRepository.save(itemToUpdate);
 

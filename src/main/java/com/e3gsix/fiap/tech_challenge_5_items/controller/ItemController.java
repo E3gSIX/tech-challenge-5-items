@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.math.BigDecimal;
+
 public interface ItemController {
 
     ResponseEntity create(
@@ -15,6 +17,6 @@ public interface ItemController {
 
     ResponseEntity<ItemResponse> findById(Long id);
 
-    ResponseEntity<ItemResponse> updateQuantity(Long id, Integer quantity);
+    ResponseEntity<ItemResponse> update(Long id, Integer quantity, BigDecimal price);
 
 }
