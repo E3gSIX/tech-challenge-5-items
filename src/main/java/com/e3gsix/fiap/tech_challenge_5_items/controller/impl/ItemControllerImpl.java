@@ -18,8 +18,7 @@ import static com.e3gsix.fiap.tech_challenge_5_items.controller.impl.ItemControl
 public class ItemControllerImpl implements ItemController {
 
     public static final String URL_ITEM = "/items";
-    public static final String URL_FIND_ITEM_BY_ID = "/{id}";
-    public static final String URL_UPDATE_ITEM_BY_ID = "/{id}";
+    public static final String URL_ITEM_BY_ID = "/{id}";
 
     private final ItemsService itemsService;
 
@@ -35,7 +34,7 @@ public class ItemControllerImpl implements ItemController {
     ) {
         Long createdItemId = this.itemsService.create(request);
 
-        URI uri = uriComponentsBuilder.path(URL_ITEM.concat(URL_FIND_ITEM_BY_ID))
+        URI uri = uriComponentsBuilder.path(URL_ITEM.concat(URL_ITEM_BY_ID))
                 .buildAndExpand(createdItemId)
                 .toUri();
 
@@ -43,13 +42,13 @@ public class ItemControllerImpl implements ItemController {
     }
 
     @Override
-    @GetMapping(URL_FIND_ITEM_BY_ID)
+    @GetMapping(URL_ITEM_BY_ID)
     public ResponseEntity<ItemResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(this.itemsService.findById(id));
     }
 
     @Override
-    @PatchMapping(URL_UPDATE_ITEM_BY_ID)
+    @PatchMapping(URL_ITEM_BY_ID)
     public ResponseEntity<ItemResponse> update(
             @PathVariable Long id,
             @RequestParam(required = false) Integer quantity,
@@ -58,5 +57,12 @@ public class ItemControllerImpl implements ItemController {
         ItemResponse updatedItem = this.itemsService.update(id, quantity, price);
 
         return ResponseEntity.ok(updatedItem);
+    }
+
+    @Override
+    @DeleteMapping(URL_ITEM_BY_ID)
+    public ResponseEntity delete( Long id) {
+        this.itemsService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

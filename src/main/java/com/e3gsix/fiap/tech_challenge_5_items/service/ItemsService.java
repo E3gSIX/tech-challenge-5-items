@@ -11,4 +11,6 @@ public interface ItemsService {
     ItemResponse findById(Long id);
 
     ItemResponse update(Long id, Integer quantity, BigDecimal price);
+
+    void deleteById(Long id);
 }

@@ -56,6 +56,12 @@ public class ItemsServiceImpl implements ItemsService {
         return toItemResponse(savedItem);
     }
 
+    @Override
+    public void deleteById(Long id) {
+        Item existingItem = getItem(id);
+        this.itemRepository.deleteById(existingItem.getId());
+    }
+
     private Item getItem(Long id) {
         return this.itemRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Item de id '" + id + "' não foi encontrado."));

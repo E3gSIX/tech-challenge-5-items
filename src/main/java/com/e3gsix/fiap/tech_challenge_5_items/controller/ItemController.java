@@ -19,4 +19,6 @@ public interface ItemController {
 
     ResponseEntity<ItemResponse> update(Long id, Integer quantity, BigDecimal price);
 
+    ResponseEntity delete(Long id);
+
 }
