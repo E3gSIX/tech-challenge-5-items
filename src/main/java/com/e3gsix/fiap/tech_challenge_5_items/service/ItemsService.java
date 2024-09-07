@@ -1,9 +1,10 @@
 package com.e3gsix.fiap.tech_challenge_5_items.service;
 
 import com.e3gsix.fiap.tech_challenge_5_items.model.dto.request.ItemCreateRequest;
-
-import java.util.UUID;
+import com.e3gsix.fiap.tech_challenge_5_items.model.dto.response.ItemResponse;
 
 public interface ItemsService {
-    UUID create(ItemCreateRequest request);
+    Long create(ItemCreateRequest request);
+
+    ItemResponse findById(Long id);
 }

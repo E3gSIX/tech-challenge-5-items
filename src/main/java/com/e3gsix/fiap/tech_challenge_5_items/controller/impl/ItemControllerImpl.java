@@ -2,12 +2,10 @@ package com.e3gsix.fiap.tech_challenge_5_items.controller.impl;
 
 import com.e3gsix.fiap.tech_challenge_5_items.controller.ItemController;
 import com.e3gsix.fiap.tech_challenge_5_items.model.dto.request.ItemCreateRequest;
+import com.e3gsix.fiap.tech_challenge_5_items.model.dto.response.ItemResponse;
 import com.e3gsix.fiap.tech_challenge_5_items.service.ItemsService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -34,12 +32,18 @@ public class ItemControllerImpl implements ItemController {
             @RequestBody ItemCreateRequest request,
             UriComponentsBuilder uriComponentsBuilder
     ) {
-        UUID createdItemId = this.itemsService.create(request);
+        Long createdItemId = this.itemsService.create(request);
 
         URI uri = uriComponentsBuilder.path(URL_ITEM.concat(URL_FIND_ITEM_BY_ID))
                 .buildAndExpand(createdItemId)
                 .toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @Override
+    @GetMapping(URL_FIND_ITEM_BY_ID)
+    public ResponseEntity<ItemResponse> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(this.itemsService.findById(id));
     }
 }
