@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.UUID;
 
 import static com.e3gsix.fiap.tech_challenge_5_items.controller.impl.ItemControllerImpl.URL_ITEM;
 
@@ -19,6 +18,7 @@ public class ItemControllerImpl implements ItemController {
 
     public static final String URL_ITEM = "/items";
     public static final String URL_FIND_ITEM_BY_ID = "/{id}";
+    public static final String URL_UPDATE_QUANTITY_ITEM_BY_ID = "/{id}";
 
     private final ItemsService itemsService;
 
@@ -45,5 +45,16 @@ public class ItemControllerImpl implements ItemController {
     @GetMapping(URL_FIND_ITEM_BY_ID)
     public ResponseEntity<ItemResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(this.itemsService.findById(id));
+    }
+
+    @Override
+    @PatchMapping(URL_UPDATE_QUANTITY_ITEM_BY_ID)
+    public ResponseEntity<ItemResponse> updateQuantity(
+            @PathVariable Long id,
+            @RequestParam Integer quantity
+    ) {
+        ItemResponse updatedItem = this.itemsService.updateQuantity(id, quantity);
+
+        return ResponseEntity.ok(updatedItem);
     }
 }

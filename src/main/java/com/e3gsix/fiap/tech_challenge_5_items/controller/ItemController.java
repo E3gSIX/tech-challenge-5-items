@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.UUID;
-
 public interface ItemController {
 
     ResponseEntity create(
@@ -16,4 +14,7 @@ public interface ItemController {
     );
 
     ResponseEntity<ItemResponse> findById(Long id);
+
+    ResponseEntity<ItemResponse> updateQuantity(Long id, Integer quantity);
+
 }

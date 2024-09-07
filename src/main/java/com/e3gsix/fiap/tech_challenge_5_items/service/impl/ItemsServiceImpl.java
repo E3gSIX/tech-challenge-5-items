@@ -32,9 +32,28 @@ public class ItemsServiceImpl implements ItemsService {
 
     @Override
     public ItemResponse findById(Long id) {
-        Item item = this.itemRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Item de id '" + id + "' não foi encontrado."));
+        Item item = getItem(id);
 
+        return toItemResponse(item);
+    }
+
+    @Override
+    public ItemResponse updateQuantity(Long id, Integer quantity) {
+        Item itemToUpdate = getItem(id);
+
+        itemToUpdate.setQuantity(quantity);
+
+        Item savedItem = this.itemRepository.save(itemToUpdate);
+
+        return toItemResponse(savedItem);
+    }
+
+    private Item getItem(Long id) {
+        return this.itemRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Item de id '" + id + "' não foi encontrado."));
+    }
+
+    private static ItemResponse toItemResponse(Item item) {
         return new ItemResponse(item.getName(), item.getDescription(), item.getPrice(), item.getQuantity());
     }
 }

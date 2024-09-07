@@ -7,4 +7,6 @@ public interface ItemsService {
     Long create(ItemCreateRequest request);
 
     ItemResponse findById(Long id);
+
+    ItemResponse updateQuantity(Long id, Integer quantity);
 }
