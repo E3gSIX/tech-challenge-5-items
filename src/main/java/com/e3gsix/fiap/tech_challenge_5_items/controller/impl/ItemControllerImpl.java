@@ -61,7 +61,7 @@ public class ItemControllerImpl implements ItemController {
 
     @Override
     @DeleteMapping(URL_ITEM_BY_ID)
-    public ResponseEntity delete( Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         this.itemsService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
