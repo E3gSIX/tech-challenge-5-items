@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import static com.e3gsix.fiap.tech_challenge_5_items.controller.impl.ItemControllerImpl.URL_ITEM;
 import static com.e3gsix.fiap.tech_challenge_5_items.controller.impl.ItemControllerImpl.URL_ITEM_BY_ID;
+import static com.e3gsix.fiap.tech_challenge_5_items.swagger.SwaggerConfig.*;
 
 @Component
 @EnableWebSecurity
@@ -35,6 +37,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, URL_SWAGGER).permitAll()
+                        .requestMatchers(HttpMethod.GET, URL_SWAGGER_DEFAULT).permitAll()
+                        .requestMatchers(HttpMethod.GET, URL_SWAGGER_API).permitAll()
                         .requestMatchers(HttpMethod.POST, URL_ITEM).hasRole(UserRole.ADMIN.getRole())
                         .requestMatchers(HttpMethod.GET, urlItemsById).permitAll()
                         .requestMatchers(HttpMethod.PATCH, urlItemsById).hasRole(UserRole.ADMIN.getRole())
@@ -43,6 +48,11 @@ public class SecurityConfig {
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/swagger-ui/**", "/v3/api-docs/**");
     }
 
     @Bean
