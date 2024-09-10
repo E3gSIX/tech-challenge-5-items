@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.e3gsix.fiap.tech_challenge_5_items.controller.impl.ItemControllerImpl.URL_ITEM;
+import static com.e3gsix.fiap.tech_challenge_5_items.swagger.SwaggerConfig.*;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -29,6 +30,9 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
 
     private final Map<String, HttpMethod> PERMITTED_RESOURCE = Map.of(
+            URL_SWAGGER, HttpMethod.GET,
+            URL_SWAGGER_DEFAULT, HttpMethod.GET,
+            URL_SWAGGER_API, HttpMethod.GET,
             URL_ITEM, HttpMethod.GET
     );
 
