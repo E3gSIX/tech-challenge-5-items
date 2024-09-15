@@ -1,4 +1,7 @@
 # Tech Challenge 5 - Items
+
+![Java Code Coverage](.github/badges/jacoco.svg)
+
 Microsserviço dedicado à gestão de itens juntamente com o preço envolvido.
 
 ## Swagger
