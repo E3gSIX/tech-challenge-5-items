@@ -8,6 +8,7 @@ class TechChallenge5ItemsApplicationTests {
 
 	@Test
 	void contextLoads() {
+		TechChallenge5ItemsApplication.main(new String[] {});
 	}
 
 }

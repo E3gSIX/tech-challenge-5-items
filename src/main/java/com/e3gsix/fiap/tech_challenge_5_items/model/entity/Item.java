@@ -28,6 +28,14 @@ public class Item {
         this.setQuantity(quantity);
     }
 
+    public Item(Long id, String name, String description, BigDecimal price, Integer quantity) {
+        this.id = id;
+        this.setName(name);
+        this.setDescription(description);
+        this.setPrice(price);
+        this.setQuantity(quantity);
+    }
+
     public Long getId() {
         return id;
     }
@@ -37,6 +45,8 @@ public class Item {
     }
 
     public void setName(String name) {
+        name = name.trim();
+
         if (name == null || name.isBlank() || name.isEmpty()) {
             throw new IllegalArgumentException("Nome do item deve ser informado.");
         }

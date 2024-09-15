@@ -4,12 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ItemTest {
 
     @Test
-    void testItemConstructor_ValidItem_ShouldSetCorrectly() {
+    void constructor_ValidItem_ShouldSetCorrectly() {
         String name = "Livro";
         String description = "Um livro interessante";
         BigDecimal price = new BigDecimal("29.99");
@@ -23,20 +24,67 @@ class ItemTest {
     }
 
     @Test
-    void testSetName_ValidName_ShouldSetCorrectly() {
+    void constructor_ValidItemAlsoId_ShouldSetCorrectly() {
+        Long id = 1L;
+        String name = "Livro";
+        String description = "Um livro interessante";
+        BigDecimal price = new BigDecimal("29.99");
+        Integer quantity = 5;
+        Item item = new Item(id, name, description, price, quantity);
+
+        assertEquals(id, item.getId());
+        assertEquals(name, item.getName());
+        assertEquals(description, item.getDescription());
+        assertEquals(price, item.getPrice());
+        assertEquals(quantity, item.getQuantity());
+    }
+
+    @Test
+    void setName_ValidName_ShouldSetCorrectly() {
         Item item = new Item();
         item.setName("Laptop");
         assertEquals("Laptop", item.getName());
     }
 
     @Test
-    void testSetName_NullName_ShouldThrowException() {
+    void setName_withBlankSpacesINName_ShouldSetCorrectly() {
         Item item = new Item();
-        assertThrows(IllegalArgumentException.class, () -> item.setName(null));
+        String nameWithSpaces = "  Nome com espaços  ";
+
+        item.setDescription(nameWithSpaces.trim());
+
+        assertEquals("Nome com espaços", item.getDescription());
     }
 
     @Test
-    void testSetPrice_ValidPrice_ShouldSetCorrectly() {
+    void setName_nullData_shouldThrowIllegalArgumentException() {
+        Item item = new Item();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> item.setDescription(null));
+
+        assertEquals("Descrição do item deve ser informado.", exception.getMessage());
+    }
+
+    @Test
+    void setName_blankData_shouldThrowIllegalArgumentException() {
+        Item item = new Item();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> item.setDescription("   "));
+
+        assertEquals("Descrição do item deve ser informado.", exception.getMessage());
+    }
+
+    @Test
+    void setName_emptyData_shouldThrowIllegalArgumentException() {
+        Item item = new Item();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> item.setDescription(""));
+
+        assertEquals("Descrição do item deve ser informado.", exception.getMessage());
+    }
+
+    @Test
+    void setPrice_ValidPrice_ShouldSetCorrectly() {
 
         Item item = new Item();
         BigDecimal price = new BigDecimal("999.99");
@@ -48,7 +96,7 @@ class ItemTest {
     }
 
     @Test
-    void testSetPrice_NegativePrice_ShouldThrowException() {
+    void setPrice_NegativePrice_ShouldThrowException() {
 
         Item item = new Item();
         BigDecimal negativePrice = new BigDecimal("-100.00");
@@ -58,13 +106,13 @@ class ItemTest {
     }
 
     @Test
-    void testSetPrice_NullPrice_ShouldThrowException() {
+    void setPrice_NullPrice_ShouldThrowException() {
         Item item = new Item();
         assertThrows(IllegalArgumentException.class, () -> item.setPrice(null));
     }
 
     @Test
-    void testSetQuantity_ValidQuantity_ShouldSetCorrectly() {
+    void setQuantity_ValidQuantity_ShouldSetCorrectly() {
 
         Item item = new Item();
         item.setQuantity(10);
@@ -73,7 +121,7 @@ class ItemTest {
     }
 
     @Test
-    void testSetQuantity_NegativeQuantity_ShouldThrowException() {
+    void setQuantity_NegativeQuantity_ShouldThrowException() {
 
         Item item = new Item();
 
@@ -82,14 +130,14 @@ class ItemTest {
     }
 
     @Test
-    void testSetDescription_InvalidDescription_ShouldSetCorrectly() {
+    void setDescription_InvalidDescription_ShouldSetCorrectly() {
         Item item = new Item();
         item.setDescription("Test description");
         assertEquals("Test description", item.getDescription());
     }
 
     @Test
-    void testSetDescription_NullDescription_ShouldThrowException() {
+    void setDescription_NullDescription_ShouldThrowException() {
         Item item = new Item();
         assertThrows(IllegalArgumentException.class, () -> item.setDescription(null));
     }
