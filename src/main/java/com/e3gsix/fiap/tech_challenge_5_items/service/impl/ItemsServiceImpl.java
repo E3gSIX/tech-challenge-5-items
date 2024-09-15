@@ -42,7 +42,7 @@ public class ItemsServiceImpl implements ItemsService {
 
     @Override
     public ItemResponse update(Long id, Integer quantity, BigDecimal price) {
-        if(Objects.isNull(quantity) && Objects.isNull(price)) {
+        if (Objects.isNull(quantity) && Objects.isNull(price)) {
             throw new UnsupportedOperationException("Preço e/ou quantidade devem ser informados.");
         }
 
@@ -68,6 +68,12 @@ public class ItemsServiceImpl implements ItemsService {
     }
 
     private static ItemResponse toItemResponse(Item item) {
-        return new ItemResponse(item.getName(), item.getDescription(), item.getPrice(), item.getQuantity());
+        return new ItemResponse(
+                item.getId(),
+                item.getName(),
+                item.getDescription(),
+                item.getPrice(),
+                item.getQuantity()
+        );
     }
 }

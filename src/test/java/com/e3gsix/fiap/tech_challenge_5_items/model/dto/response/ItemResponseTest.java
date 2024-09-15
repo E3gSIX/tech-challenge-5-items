@@ -9,7 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ItemResponseTest {
     @Test
     void testItemResponse() {
-        ItemResponse item = new ItemResponse("Produto A", "Descrição do produto", BigDecimal.valueOf(100.0), 5);
+        ItemResponse item = new ItemResponse(
+                1L,
+                "Produto A",
+                "Descrição do produto",
+                BigDecimal.valueOf(100.0),
+                5
+        );
 
         assertEquals("Produto A", item.name());
         assertEquals("Descrição do produto", item.description());
